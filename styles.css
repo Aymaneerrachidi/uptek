@@ -1,0 +1,132 @@
+body {
+    background-image: url('img/Background\ up.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+}
+
+.up-text {
+    max-width: 250px;
+    height: auto;
+}
+
+.logo {
+    max-width: 950px;
+    height: auto;
+}
+
+.content {
+    position: relative;
+}
+
+.uptek-shape {
+    max-width: 120px;
+    height: auto;
+    margin-top: -100px;
+    position: relative;
+    display: block;
+}
+
+.uptek-shape::after {
+    content: attr(data-mc);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffff00;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), -2px -2px 4px rgba(0, 0, 0, 0.9);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.market-cap-info {
+    margin-top: 0px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#market-cap-text {
+    margin: 0;
+}
+
+.top-left-images {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.top-left-img {
+    max-width: 80px;
+    height: auto;
+}
+
+.top-right-images {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.top-right-img {
+    max-width: 40px;
+    height: auto;
+}
+
+.scrolling-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    overflow: hidden;
+    z-index: 999;
+}
+
+.scrolling-banner span {
+    display: inline-block;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    white-space: nowrap;
+    animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        margin-left: 100%;
+    }
+    100% {
+        margin-left: -100%;
+    }
+}
