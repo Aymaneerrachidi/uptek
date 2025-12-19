@@ -102,6 +102,22 @@ body {
     height: auto;
 }
 
+.top-right-link {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.top-right-link:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.top-right-link:active {
+    transform: scale(0.95);
+}
+
 .scrolling-banner {
     position: fixed;
     bottom: 0;

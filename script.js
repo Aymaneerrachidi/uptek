@@ -3,11 +3,16 @@ console.log('Script loaded');
 // Replace with your Solana token address
 const TOKEN_ADDRESS = "dvdzpijxyyladzvnsktftarc2k6ckrgbtoxsfwqcjb5c";
 
-function fetchMarketCap() {
-    console.log('fetchMarketCap called');
-    
-    // Create or get market cap container
-    let mcContainer = document.getElementById('mc-container');
+// Fast refresh (ms). Adjust if you need faster/slower updates.
+const REFRESH_INTERVAL_MS = 250;
+
+let mcContainer = null;
+let lastMarketCap = null;
+let currentController = null;
+
+function ensureMcContainer() {
+    if (mcContainer) return mcContainer;
+    mcContainer = document.getElementById('mc-container');
     if (!mcContainer) {
         mcContainer = document.createElement('div');
         mcContainer.id = 'mc-container';
@@ -30,42 +35,50 @@ function fetchMarketCap() {
         if (uptekShape && uptekShape.parentElement) {
             uptekShape.parentElement.style.position = 'relative';
             uptekShape.parentElement.appendChild(mcContainer);
+        } else {
+            document.body.appendChild(mcContainer);
         }
     }
-    
-    // Try the search endpoint
-    fetch(`https://api.dexscreener.com/latest/dex/search?q=${TOKEN_ADDRESS}`)
-        .then(response => {
-            console.log('Response received:', response.status);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received:', data);
-            if (data.pairs && data.pairs.length > 0) {
-                const pair = data.pairs[0];
-                const marketCap = pair.marketCap;
-                
-                console.log('Market cap:', marketCap);
-                
-                // Format market cap as simple text
-                const formattedMarketCap = marketCap 
-                    ? `$${parseFloat(marketCap).toLocaleString('en-US', { maximumFractionDigits: 0 })}`
-                    : "N/A";
-                
-                mcContainer.textContent = formattedMarketCap;
-                console.log('Updated display:', formattedMarketCap);
-            } else {
-                mcContainer.textContent = 'No data';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching market cap:', error);
-            mcContainer.textContent = 'Error';
-        });
+    return mcContainer;
 }
 
-// Call immediately
-setTimeout(fetchMarketCap, 100);
+async function fetchMarketCap() {
+    ensureMcContainer();
 
-// Refresh market cap every 1 second
-setInterval(fetchMarketCap, 1000);
+    // Abort any previous pending fetch to avoid overlap
+    if (currentController) currentController.abort();
+    currentController = new AbortController();
+    const signal = currentController.signal;
+
+    try {
+        const resp = await fetch(`https://api.dexscreener.com/latest/dex/search?q=${TOKEN_ADDRESS}`, { signal });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+
+        if (data.pairs && data.pairs.length > 0) {
+            const pair = data.pairs[0];
+            const raw = pair.marketCap ?? pair.market_cap ?? null;
+            const mcNum = raw != null ? Number(raw) : NaN;
+
+            if (!isNaN(mcNum)) {
+                // Only update DOM when value actually changes to reduce flicker
+                if (lastMarketCap === null || lastMarketCap !== mcNum) {
+                    lastMarketCap = mcNum;
+                    mcContainer.textContent = `$${mcNum.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+                }
+            } else {
+                mcContainer.textContent = 'N/A';
+            }
+        } else {
+            mcContainer.textContent = 'No data';
+        }
+    } catch (err) {
+        if (err.name === 'AbortError') return; // expected when aborting
+        console.error('Error fetching market cap:', err);
+        mcContainer.textContent = 'Error';
+    }
+}
+
+// Start immediately and then poll at the chosen fast interval
+fetchMarketCap();
+setInterval(fetchMarketCap, REFRESH_INTERVAL_MS);
