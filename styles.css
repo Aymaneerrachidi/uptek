@@ -48,6 +48,80 @@ body {
     display: block;
 }
 
+.bg-decorative {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bg-decor-logo,
+.bg-decor-text,
+.bg-decor-price {
+    position: absolute;
+    opacity: 0.08;
+}
+
+.bottom-left-decor {
+    bottom: 15%;
+    left: 8%;
+    max-width: 120px;
+    height: auto;
+}
+
+.bottom-right-decor {
+    bottom: 20%;
+    right: 5%;
+    max-width: 110px;
+    height: auto;
+}
+
+.mid-right-decor {
+    top: 45%;
+    right: 2%;
+    max-width: 140px;
+    height: auto;
+}
+
+.center-bottom-decor {
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 105px;
+    height: auto;
+}
+
+.left-decor {
+    top: 60%;
+    left: 2%;
+    max-width: 125px;
+    height: auto;
+}
+
+.right-decor {
+    bottom: 35%;
+    right: 3%;
+    max-width: 115px;
+    height: auto;
+}
+
+.far-left-decor {
+    top: 25%;
+    left: 1%;
+    max-width: 110px;
+    height: auto;
+}
+
+.far-right-decor {
+    top: 55%;
+    right: 1%;
+    max-width: 120px;
+    height: auto;
+}
+
 .uptek-shape::after {
     content: attr(data-mc);
     position: absolute;
@@ -89,22 +163,6 @@ body {
     height: auto;
 }
 
-.top-left-link {
-    display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-}
-
-.top-left-link:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-}
-
-.top-left-link:active {
-    transform: scale(0.95);
-}
-
 .top-right-images {
     position: absolute;
     top: 20px;
@@ -116,22 +174,6 @@ body {
 .top-right-img {
     max-width: 40px;
     height: auto;
-}
-
-.top-right-link {
-    display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-}
-
-.top-right-link:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-}
-
-.top-right-link:active {
-    transform: scale(0.95);
 }
 
 .scrolling-banner {
