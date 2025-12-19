@@ -89,6 +89,22 @@ body {
     height: auto;
 }
 
+.top-left-link {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.top-left-link:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.top-left-link:active {
+    transform: scale(0.95);
+}
+
 .top-right-images {
     position: absolute;
     top: 20px;
