@@ -1,7 +1,7 @@
 console.log('Script loaded');
 
 // Replace with your Solana token address
-const TOKEN_ADDRESS = "dvdzpijxyyladzvnsktftarc2k6ckrgbtoxsfwqcjb5c";
+const TOKEN_ADDRESS = "2TAi8XLzDJ8btNTQp7WtCvhGuMnWzkFddr1PhYf6pump";
 
 function fetchMarketCap() {
     console.log('fetchMarketCap called');
@@ -13,7 +13,7 @@ function fetchMarketCap() {
         mcContainer.id = 'mc-container';
         mcContainer.style.cssText = `
             position: absolute;
-            top: 95%;
+            top: 96%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: #000000;
